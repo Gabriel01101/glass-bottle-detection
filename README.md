@@ -16,11 +16,6 @@ Asegúrate de tener instalados los siguientes paquetes:
 - OpenCV
 - NumPy
 
-## Ejecución
-
-Para ejecutar el script, utiliza el siguiente comando:
-
-
 
 # Detector de Botellas con YOLOv3
 
@@ -39,9 +34,7 @@ Asegúrate de tener instalados los siguientes paquetes:
 - OpenCV
 - NumPy
 
-## Ejecución
 
-Para ejecutar el script, utiliza el siguiente comando:
 
 
 
