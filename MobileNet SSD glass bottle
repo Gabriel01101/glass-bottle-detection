@@ -1,0 +1,64 @@
+import os
+import cv2
+import numpy as np
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+if os.path.isfile(os.path.join(current_directory, 'deploy.prototxt')):
+    print("El archivo deploy.prototxt existe.")
+else:
+    print("El archivo deploy.prototxt no existe.")
+
+if os.path.isfile(os.path.join(current_directory, 'mobilenet_iter_73000.caffemodel')):
+    print("El archivo mobilenet_iter_73000.caffemodel existe.")
+else:
+    print("El archivo mobilenet_iter_73000.caffemodel no existe.")
+
+net = cv2.dnn.readNetFromCaffe(os.path.join(current_directory, 'deploy.prototxt'),
+                               os.path.join(current_directory, 'mobilenet_iter_73000.caffemodel'))
+
+net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)  
+
+confidence_threshold = 0.5
+
+
+def detect_bottles_live():
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        (h, w) = frame.shape[:2]
+
+        blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 0.007843, (300, 300), 127.5)
+
+        net.setInput(blob)
+        detections = net.forward()
+
+        for i in range(detections.shape[2]):
+            confidence = detections[0, 0, i, 2]
+
+            if confidence > confidence_threshold:
+                idx = int(detections[0, 0, i, 1])
+                if idx == 43:  # La clase 43 corresponde a "bottle" en el modelo MobileNet SSD
+                    box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+                    (startX, startY, endX, endY) = box.astype("int")
+
+                    
+                    cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+                    label = "Bottle: {:.2f}%".format(confidence * 100)
+                    y = startY - 15 if startY - 15 > 15 else startY + 15
+                    cv2.putText(frame, label, (startX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        cv2.imshow("Detected Bottles", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+detect_bottles_live()
