@@ -1,6 +1,6 @@
-# Detector de Botellas en Tiempo Real
+# Detector de Botellas MobileNet-SSD
 
-Este script en Python implementa un detector de botellas en tiempo real utilizando OpenCV y el modelo preentrenado MobileNet SSD. Asegúrate de tener los siguientes archivos en el mismo directorio que el script:
+Este script en Python implementa un detector de botellas en tiempo real utilizando OpenCV y el modelo preentrenado MobileNet SSD. Se necesitan los siguientes archivos en el mismo directorio que el script:
 
 - `deploy.prototxt`
 - `mobilenet_iter_73000.caffemodel`
@@ -22,3 +22,5 @@ Para ejecutar el script, utiliza el siguiente comando:
 
 ```bash
 python detect_bottles.py
+
+# Detector de botellas YOLO y COCO
