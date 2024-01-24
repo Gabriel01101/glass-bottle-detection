@@ -20,7 +20,28 @@ Asegúrate de tener instalados los siguientes paquetes:
 
 Para ejecutar el script, utiliza el siguiente comando:
 
-```bash
-python detect_bottles.py
 
-# Detector de botellas YOLO y COCO
+
+# Detector de Botellas con YOLOv3
+
+Este script en Python utiliza el modelo preentrenado YOLOv3 para detectar botellas en un entorno de video en tiempo real. Se necesitan  los siguientes archivos en el mismo directorio que el script:
+
+- `yolov3.weights`
+- `yolov3.cfg`
+- `coco.names`
+
+Puedes descargar los archivos del modelo YOLOv3 desde [aquí](https://pjreddie.com/darknet/yolo/).
+
+## Requisitos
+
+Asegúrate de tener instalados los siguientes paquetes:
+
+- OpenCV
+- NumPy
+
+## Ejecución
+
+Para ejecutar el script, utiliza el siguiente comando:
+
+
+
